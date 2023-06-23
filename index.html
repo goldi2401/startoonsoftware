@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Graph Plotter</title>
+  <style>
+    .graph {
+      width: 400px;
+      height: 200px;
+      border: 1px solid #000;
+      position: relative;
+    }
+
+    .bar {
+      position: absolute;
+      bottom: 0;
+      width: 20px;
+      background-color: #0099ff;
+    }
+
+    .pie {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .slice {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip: rect(0, 100px, 200px, 0);
+      transform: rotate(0deg);
+      transform-origin: center center;
+    }
+
+    #error-message {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Graph Plotter</h1>
+
+  <div>
+    <label for="input-value">Input Value:</label>
+    <input type="text" id="input-value">
+  </div>
+
+  <div>
+    <label for="max-value">Max Value:</label>
+    <input type="text" id="max-value">
+  </div>
+
+  <button onclick="plotGraph()">Plot</button>
+
+  <div class="graph" id="vertical-bar-graph"></div>
+  <div class="graph" id="gradient-bar-graph"></div>
+  <div class="pie" id="pie-chart"></div>
+
+  <p id="error-message"></p>
+
+  <script>
+    function plotGraph() {
+      var inputValue = parseFloat(document.getElementById('input-value').value);
+      var maxValue = parseFloat(document.getElementById('max-value').value);
+
+      if (isNaN(inputValue) || isNaN(maxValue)) {
+        document.getElementById('error-message').textContent = 'Please enter valid input values.';
+        return;
+      }
+
+      if (inputValue > maxValue) {
+        document.getElementById('error-message').textContent = 'Input value cannot be greater than max value.';
+        return;
+      }
+
+      document.getElementById('error-message').textContent = '';
+
+      var percentage = (inputValue / maxValue) * 100;
+
+      // Vertical Bar Graph
+      var verticalBarGraph = document.getElementById('vertical-bar-graph');
+      verticalBarGraph.innerHTML = '';
+      var bar = document.createElement('div');
+      bar.style.height = percentage + '%';
+      verticalBarGraph.appendChild(bar);
+
+      // Gradient in Vertical Bar Graph
+      var gradientBarGraph = document.getElementById('gradient-bar-graph');
+      gradientBarGraph.innerHTML = '';
+      var gradientBar = document.createElement('div');
+      gradientBar.className = 'bar';
+      gradientBar.style.height = percentage + '%';
+      gradientBarGraph.appendChild(gradientBar);
+
+      // Pie Chart
+      var pieChart = document.getElementById('pie-chart');
+      pieChart.innerHTML = '';
+      var slice = document.createElement('div');
+      slice.className = 'slice';
+      if (percentage > 50) {
+        slice.style.clip = 'rect(auto, auto, auto, auto)';
+        slice.style.transform = 'rotate(180deg)';
+      }
+      pieChart.appendChild(slice);
+    }
+  </script>
+</body>
+</html>

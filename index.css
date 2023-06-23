@@ -1,0 +1,26 @@
+.seat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Adjust as per your seat layout */
+    gap: 10px;
+  }
+  
+  .seat {
+    width: 40px;
+    height: 40px;
+    background-color: green; /* Adjust colors as needed */
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+  }
+  
+  .seat.selected {
+    background-color: red; /* Adjust selected seat color */
+  }
+  
+  .seat-details {
+    margin-top: 20px;
+  }
+  
+  /* Add styles for horizontal scrolling of seat types and descriptions */
+  
